@@ -90,8 +90,9 @@ namespace M_30
 
         private void refresToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            mTable.Reset();
+            for (int i = 0; i < mTable.Rows.Count; i++) checkBox[i].Dispose();
             loadDatabase();
-            for (int i = 0; i < checkBox.Count(); i++)checkBox[i].Dispose();
             int y = 30;
             if (checkBox.Length < mTable.Rows.Count) Array.Resize(ref checkBox, mTable.Rows.Count);
             for (int i = 0; i < mTable.Rows.Count; i++)
