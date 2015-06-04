@@ -80,11 +80,13 @@ namespace M_30
             checkBox[nr].Name = name;
             checkBox[nr].Text = name;
             checkBox[nr].Location = new Point(12, top);
+            checkBox[nr].CheckedChanged += new System.EventHandler(this.checkBox_ChangeEvent);
             this.Controls.Add(checkBox[nr]);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
         }
 
         private void refresToolStripMenuItem_Click(object sender, EventArgs e)
@@ -98,6 +100,18 @@ namespace M_30
             {
                 create_checks(i, nameGetter(i), y);
                 y += 20;
+            }
+        }
+
+        private void checkBox_ChangeEvent(object sender, EventArgs e)
+        {
+            for (int i = 0; i < mTable.Rows.Count; i++)
+            {
+                if (checkBox[i].Checked == true)
+                {
+                    Download down = new Download(LinkGetter(i));
+                    down.Show();
+                }
             }
         }
     }
