@@ -81,6 +81,7 @@ namespace M_30
             checkBox[nr].Text = name;
             checkBox[nr].Location = new Point(12, top);
             checkBox[nr].CheckedChanged += new System.EventHandler(this.checkBox_ChangeEvent);
+            checkBox[nr].Tag = "false";
             this.Controls.Add(checkBox[nr]);
         }
 
@@ -107,10 +108,11 @@ namespace M_30
         {
             for (int i = 0; i < mTable.Rows.Count; i++)
             {
-                if (checkBox[i].Checked == true)
+                if (checkBox[i].Checked == true && checkBox[i].Tag.ToString() == "false")
                 {
-                    Download down = new Download(LinkGetter(i));
+                    Download down = new Download(LinkGetter(i), nameGetter(i));
                     down.Show();
+                    checkBox[i].Tag = "true";
                 }
             }
         }

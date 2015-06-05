@@ -16,12 +16,12 @@ namespace M_30
     public partial class Download : Form
     {
         string appFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
-        public Download(string link)
+        public Download(string link, string name)
         {
             InitializeComponent();
             label2.Text = "Initializing ...";
             createFolder();
-            startDownload(link);
+            startDownload(link, name);
         }
         private void createFolder()
         {
@@ -29,7 +29,7 @@ namespace M_30
             if (!Directory.Exists(appFolder))
                 Directory.CreateDirectory(appFolder);
         }
-        private void startDownload(string link)
+        private void startDownload(string link, string name)
         {
             label2.Text = "Starting Download ...";
             Thread thread = new Thread(() =>
@@ -39,7 +39,7 @@ namespace M_30
                     WebClient client = new WebClient();
                     client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                     client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                    client.DownloadFileAsync(new Uri(link), appFolder);
+                    client.DownloadFileAsync(new Uri(link), appFolder + @"\" + name + getExtension(link));
                 }
                 catch (WebException w)
                 {
@@ -60,12 +60,17 @@ namespace M_30
                 progressBar1.Value = int.Parse(Math.Truncate(percentage).ToString());
             });
         }
+        private string getExtension(string link)
+        {
+            Uri myUri = new Uri(link);
+            string path = String.Format("{0}{1}{2}{3}", myUri.Scheme, Uri.SchemeDelimiter, myUri.Authority, myUri.AbsolutePath);
+            string extension = Path.GetExtension(path);
+            return extension;
+        }
         void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             this.BeginInvoke((MethodInvoker)delegate
             {
-                label2.Text = "Completed";
-                Thread.Sleep(2000);
                 this.Close();
             });
         }
