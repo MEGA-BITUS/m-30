@@ -85,11 +85,11 @@
             // 
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
-            "X64",
-            "X32(X86)"});
+            "X32(X86)",
+            "X64"});
             this.checkedListBox1.Location = new System.Drawing.Point(65, 57);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(120, 34);
+            this.checkedListBox1.Size = new System.Drawing.Size(120, 19);
             this.checkedListBox1.TabIndex = 1;
             // 
             // button1
