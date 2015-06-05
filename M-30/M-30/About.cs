@@ -16,6 +16,13 @@ namespace M_30
         {
             InitializeComponent();
             this.Name = "About " + this.ProductName;
+            label1.Text = label1.Text + this.ProductVersion;
+            label2.Text = label2.Text + this.CompanyName;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
