@@ -52,16 +52,32 @@ namespace M_30
             int many = 0;
             for (int i = 0; i < mTable.Rows.Count; i++)
                 if (typeGetter(i) == "32")
-                {
-                    poz[many] = i;
-                    many += 1;
-                }
+                    if (checkExist(nameGetter(i)) == false)
+                    {
+                        poz[many] = i;
+                        many += 1;
+                    }
             for (int i = 0; i < many; i++)
             {
-                create_checks(chnumber, nameGetter(poz[chnumber]) + " " + "x32", y);
-                y += 20;
-                chnumber += 1;
+                if (checkExist(nameGetter(poz[chnumber])) == false)
+                {
+                    create_checks(chnumber, nameGetter(poz[chnumber]) + " " + "x32", y);
+                    y += 20;
+                    chnumber += 1;
+                }  
             }
+        }
+
+        private bool checkExist(string name)
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is CheckBox)
+                {
+                    if (c.Text.Contains(name)) return true;
+                }
+            }
+            return false;
         }
 
         private void loadDatabase()
@@ -129,13 +145,9 @@ namespace M_30
             mTable.Reset();
             for (int i = 0; i < mTable.Rows.Count; i++) checkBox[i].Dispose();
             loadDatabase();
-            int y = 30;
             if (checkBox.Length < mTable.Rows.Count) Array.Resize(ref checkBox, mTable.Rows.Count);
-            for (int i = 0; i < mTable.Rows.Count; i++)
-            {
-                create_checks(i, nameGetter(i), y);
-                y += 20;
-            }
+            if (is64bit == true) programs64Add();
+            programs32Add();
         }
 
         private void checkBox_ChangeEvent(object sender, EventArgs e)
