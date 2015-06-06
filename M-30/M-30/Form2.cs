@@ -56,18 +56,18 @@ namespace M_30
             bool version = false, name = false, link = false;
             if (checkedListBox1.GetItemChecked(0))
             {
-                x = 64;
+                x = 32;
                 version = true;
             }
             else if (checkedListBox1.GetItemChecked(1))
             {
-                x = 32;
+                x = 64;
                 version = true;
             }
             if (textBox1.Text != null) name = true;
             if (textBox2.Text != null) link = true;
             if (version == true && name == true && link == true) add(textBox1.Text, textBox2.Text, x);
-            else MessageBox.Show("Check the infomrations!");
+            else MessageBox.Show("Check the informations!");
         }
 
     }

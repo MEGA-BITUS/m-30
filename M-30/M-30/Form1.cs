@@ -17,17 +17,21 @@ namespace M_30
         DataTable mTable = new DataTable();
         CheckBox[] checkBox = new CheckBox[1];
         string mConnString = "server=sql5.freemysqlhosting.net;uid=sql579515;" + "pwd=gE9%aF5!;database=sql579515;";
+        bool is64bit = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
         public Form1()
         {
             InitializeComponent();
             loadDatabase();
-            int y = 30;
+            int y = 30, i = 0;
             if (checkBox.Length < mTable.Rows.Count) Array.Resize(ref checkBox, mTable.Rows.Count);
-            for (int i = 0; i < mTable.Rows.Count; i++)
+            while (i < mTable.Rows.Count)
             {
-                create_checks(i, nameGetter(i), y);
+                if(is64bit == true && typeGetter(i) == "64")create_checks(i, nameGetter(i) + " " + "x64", y);
+                else create_checks(i, nameGetter(i) + " " + "x32", y);
                 y += 20;
+                i++;
             }
+            MessageBox.Show(is64bit.ToString());
         }
 
         private void loadDatabase()
