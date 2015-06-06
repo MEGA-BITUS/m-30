@@ -14,7 +14,7 @@ namespace M_30
 {
     public partial class Form1 : Form
     {
-        int y = 30;
+        int y = 30, chnumber = 0;
         DataTable mTable = new DataTable();
         CheckBox[] checkBox = new CheckBox[1];
         string mConnString = "server=sql5.freemysqlhosting.net;uid=sql579515;" + "pwd=gE9%aF5!;database=sql579515;";
@@ -24,7 +24,8 @@ namespace M_30
             InitializeComponent();
             loadDatabase();
             if (checkBox.Length < mTable.Rows.Count) Array.Resize(ref checkBox, mTable.Rows.Count);
-            programs64Add();
+            if (is64bit == true) programs64Add();
+            programs32Add();
         }
 
         private void programs64Add()
@@ -36,12 +37,31 @@ namespace M_30
                 {
                     poz[many] = i;
                     many += 1;
-                }  
+                }
             for (int i = 0; i < many; i++)
-			{
-                create_checks(i, nameGetter(poz[i]) + " " + "x64", y);
+            {
+                create_checks(chnumber, nameGetter(poz[chnumber]) + " " + "x64", y);
                 y += 20;
-			}
+                chnumber += 1;
+            }
+        }
+
+        private void programs32Add()
+        {
+            int[] poz = new int[mTable.Rows.Count];
+            int many = 0;
+            for (int i = 0; i < mTable.Rows.Count; i++)
+                if (typeGetter(i) == "32")
+                {
+                    poz[many] = i;
+                    many += 1;
+                }
+            for (int i = 0; i < many; i++)
+            {
+                create_checks(chnumber, nameGetter(poz[chnumber]) + " " + "x32", y);
+                y += 20;
+                chnumber += 1;
+            }
         }
 
         private void loadDatabase()
